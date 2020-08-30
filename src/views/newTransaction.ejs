@@ -1,0 +1,127 @@
+<!-- views/transaction.ejs -->
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="form-header">
+			<% if (Object.keys(errors).length === 0) { %>
+			<h2>Transfer fund to A Friend</h2>
+			<% } else { %>
+			<h2 class="errors-heading">Oops, please correct the following:</h2>
+			<ul class="errors-list">
+				<% Object.values(errors).forEach(error => { %>
+				<li><%= error.msg %></li>
+				<% }) %>
+			</ul>
+			<% } %>
+		</div>
+		<form method="post" action="/sendFund" novalidate>
+			<div class="row">
+				<div class="col-md-12 form-field <%= errors.amount ? 'form-field-invalid' : '' %>">
+					<label for="amount">Amount to Send</label>
+					<input class="input" id="amount" name="amount" type="amount" value="<%= data.amount %>" />
+					<% if (errors.amount) { %>
+					<div class="error"><%= errors.amount.msg %></div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 form-field <%= errors.senderName ? 'form-field-invalid' : '' %>">
+					<label for="senderName">Name</label>
+					<input class="input" id="senderName" name="senderName" type="senderName" value="<%= data.senderName %>" />
+					<% if (errors.senderName) { %>
+					<div class="error"><%= errors.senderName.msg %></div>
+					<% } %>
+				</div>
+				<div class="col-md-6 form-field <%= errors.senderPhone ? 'form-field-invalid' : '' %>">
+					<label for="senderPhone">Phone</label>
+					<input class="input" id="senderPhone" name="senderPhone" type="senderPhone" value="<%= data.senderPhone %>" />
+					<% if (errors.senderPhone) { %>
+					<div class="error"><%= errors.senderPhone.msg %></div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col form-field <%= errors.senderEmail ? 'form-field-invalid' : '' %>">
+					<label for="senderEmail">Email</label>
+					<input class="input" id="senderEmail" name="senderEmail" type="senderEmail" value="<%= data.senderEmail %>" />
+					<% if (errors.senderEmail) { %>
+					<div class="error"><%= errors.senderEmail.msg %></div>
+					<% } %>
+				</div>
+				<div class="col form-field <%= errors.senderAddress ? 'form-field-invalid' : '' %>">
+					<label for="senderAddress">Address</label>
+					<input class="input" id="senderAddress" name="senderAddress" type="senderAddress" value="<%= data.senderAddress %>" />
+					<% if (errors.senderAddress) { %>
+					<div class="error"><%= errors.senderAddress.msg %></div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col form-field <%= errors.recieverName ? 'form-field-invalid' : '' %>">
+					<label for="recieverName">Reciever's Name</label>
+					<input class="input" id="recieverName" name="recieverName" type="recieverName" value="<%= data.recieverName %>" />
+					<% if (errors.recieverName) { %>
+					<div class="error"><%= errors.recieverName.msg %></div>
+					<% } %>
+				</div>
+				<div class="col form-field <%= errors.recieverPhone ? 'form-field-invalid' : '' %>">
+					<label for="recieverPhone">Reciever's Phone</label>
+					<input class="input" id="recieverPhone" name="recieverPhone" type="recieverPhone" value="<%= data.recieverPhone %>" />
+					<% if (errors.recieverPhone) { %>
+					<div class="error"><%= errors.recieverPhone.msg %></div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col form-field <%= errors.recieverEmail ? 'form-field-invalid' : '' %>">
+					<label for="recieverEmail">Reciever's Email</label>
+					<input class="input" id="recieverEmail" name="recieverEmail" type="recieverEmail" value="<%= data.recieverEmail %>" />
+					<% if (errors.recieverEmail) { %>
+					<div class="error"><%= errors.recieverEmail.msg %></div>
+					<% } %>
+				</div>
+				<div class="col form-field <%= errors.recieverAddress ? 'form-field-invalid' : '' %>">
+					<label for="recieverAddress">Address</label>
+					<input class="input" id="recieverAddress" name="recieverAddress" type="recieverAddress" value="<%= data.recieverAddress %>" />
+					<% if (errors.recieverAddress) { %>
+					<div class="error"><%= errors.recieverAddress.msg %></div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col form-field <%= errors.recieverCountry ? 'form-field-invalid' : '' %>">
+					<label for="recieverCountry">Reciever's Country</label>
+					<!-- <input class="input" id="recieverCountry" name="recieverCountry" type="recieverCountry" value="<%= data.recieverCountry %>" /> -->
+					<select class="input" id="recieverCountry" name="recieverCountry" type="recieverCountry" value="<%= data.recieverCountry %>" >
+						<option value="Nigeria">Nigeria</option>
+						<option value="Ghana">Ghana</option>
+					</select>
+					<% if (errors.recieverCountry) { %>
+					<div class="error"><%= errors.recieverCountry.msg %></div>
+					<% } %>
+				</div>
+				<div class="col form-field <%= errors.paymentMethod ? 'form-field-invalid' : '' %>">
+					<label for="paymentMethod">Payment Method</label>
+					<!-- <input class="input" id="paymentMethod" name="paymentMethod" type="paymentMethod" value="<%= data.paymentMethod %>" /> -->
+					<select class="input" id="paymentMethod" name="paymentMethod" type="paymentMethod" value="<%= data.paymentMethod %>">
+						<option value="Nigeria">Bank transfer</option>
+						<option value="Ghana">Mobile Money</option>
+					</select>
+					<% if (errors.paymentMethod) { %>
+					<div class="error"><%= errors.paymentMethod.msg %></div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row"></div>
+			<!-- <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
+				<label for="email">Email</label>
+				<input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
+				<% if (errors.email) { %>
+				<div class="error"><%= errors.email.msg %></div>
+				<% } %>
+			</div> -->
+			<div class="form-actions">
+				<button class="btn" type="submit">Send</button>
+			</div>
+		</form>
+	</div>
+</div>

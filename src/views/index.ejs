@@ -1,0 +1,8 @@
+<!-- views/index.ejs -->
+<% if (messages.success) { %>
+  <div class="flash flash-success"><%= messages.success %></div>
+<% } %>
+
+<h1>Sample Transaction App for Universal API</h1>
+
+<a href="/sendFund"> Start new transaction </a>
