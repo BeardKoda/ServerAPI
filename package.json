@@ -21,7 +21,7 @@
   "scripts": {
     "start": "NODE_ENV=development node src/index.js",
     "build:client": "cd client && yarn build",
-    "heroku-postbuild":"cd client && yarn build",
+    "heroku-postbuild":"cd client && yarn && yarn build",
     "start:server": "NODE_ENV=development node src/index.js",
     "dev": "NODE_ENV=development nodemon src/index.js"
   },
