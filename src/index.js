@@ -42,9 +42,9 @@ app.use("/api/v1/", apiRoute);
 
 // app.use('/api/v1/', apiRoute);
 
-// app.use((req, res, next) => {
-//   res.status(404).json({message:"Route not found"});
-// });
+app.all('*',(req, res, next) => {
+  res.status(404).json({message:"Route not found"});
+});
 
 // app.use((err, req, res, next) => {
 //   console.error(err.stack);
