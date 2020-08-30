@@ -13,12 +13,14 @@ let controller = {
       console.log(errors.array()[0]);
       return res.status(400).json({ errors: errors.array()[0].msg });
     }
+    console.log('returning ==>', req.body);
     return res.status(200).json({
       success: true,
       message: "successfull made transaction",
       data: { txid: "sfasfasfasfsaf" },
     });
   },
+
   create: async (req, res) => {
     try {
       // console.log(req.body);
@@ -28,7 +30,7 @@ let controller = {
         return res.status(400).json({ errors: errors.array()[0].msg });
       }
       let url = `${process.env.UAPI}/transaction/initiate`;
-      let token = `${process.env.secret_key}`;
+      let token = `${req.body.secretKey || process.env.secret_key}`;
       let config = {
         headers: {
           Authorization: `bearer ${token}`,
@@ -38,22 +40,24 @@ let controller = {
       // console.log(token, body, url);
       let ressd = await axios.post(`${url}`, body, config);
       // .then((res) => {
-      console.log(ressd.data);
+      // console.log(ressd.data);
       let rvt = ressd.data;
       return res.status(200).json(rvt);
       // })
     } catch (err) {
-      console.log(err);
-      let data = err.response.data;
-      return res.status(data.status).json({ message: data.error });
+      let data = err.response;
+      // console.log(data.data);
+      return res.status(data.status).json({message: data.data.error});
     }
   },
+
   proceed: async (req, res) => {
       let txId = req.params.txId;
-      console.log(txId);
+      let secretKey = req.query.secretKey;
+      console.log(txId, secretKey, req.query, '\n\n\n');
     try {
       let url = `${process.env.UAPI}/transaction/process?txId=${txId}`;
-      let token = `${process.env.secret_key}`;
+      let token = `${secretKey||process.env.secret_key}`;
       let config = {
         headers: {
           Authorization: `bearer ${token}`,
@@ -68,9 +72,9 @@ let controller = {
       return res.status(200).json(rvt);
       // })
     } catch (err) {
-      console.log(err);
-      let data = err.response.data;
-      return res.status(data.status).json({ message: data.error });
+      let data = err.response;
+      console.log(err.response.data);
+      return res.status(data.status).json({ message: data.data.message });
     }
   },
 };

@@ -5,9 +5,9 @@ const service = {
     // console.log(data);
     return axios.post(`/api/v1/sendPayment`, data);
   },
-  proceedPayment(txId) {
+  proceedPayment(txId, key) {
     // console.log(data);
-    return axios.post(`/api/v1/sendPayment/proceed/${txId}`);
+    return axios.post(`/api/v1/sendPayment/proceed/${txId}?secretKey=${key}`);
   },
 };
 export default service;

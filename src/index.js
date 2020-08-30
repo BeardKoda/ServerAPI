@@ -30,16 +30,16 @@ app.use(middlewares);
 
 app.use(express.static(DIR));
 
+// routes Files
+app.use("/api/v1/", apiRoute);
+
 // Handles any requests that don't match the ones above
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, DIR, '/index.html'));
 });
 
 // app.use(express.static(path.join(__dirname, "..", "client/build")));
 // app.use(express.static("public"));
-// routes Files
-app.use("/api/v1/", apiRoute);
-
 // app.use('/api/v1/', apiRoute);
 
 app.all('*',(req, res, next) => {

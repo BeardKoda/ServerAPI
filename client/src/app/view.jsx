@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react';
+import './form.css';
 import {  Modal, Button, Row, Col } from 'react-bootstrap'
 
 const ModalView = (props)=> {
-	const { show, setShow, data, Proceed } = props;
-  // const [show, setShow] = useState(false);
-	useEffect(()=>{
-		const myObj = { a: 1, b: 2 };
-
-    for (let [key, value] of Object.entries(myObj)) {
-      console.log(`key=${key} value=${value}`);
-    }
-	}, [])
-  const handleClose = () => setShow(false);
+	const { show, setShow, data, Proceed, resetForm, formData } = props;
+  
+  const handleClose = () =>{
+    resetForm(formData)
+    setShow(false)
+  };
 	// const handleShow = () => setShow(true);
 	const handleProceed = () => {
 		Proceed(data.txId);
@@ -35,9 +32,9 @@ const ModalView = (props)=> {
           <div className={"p-5"}>
             {Object.keys(data).map((obj, i) => {
               return (
-                <Row className={"mb-2"} key={i}>
+                <Row className={"mb-2 over"} key={i}>
                   <Col xs={4} md={4}>
-                    {JSON.stringify(obj)}
+                    {obj}
                   </Col>
                   <Col xs={8} md={8}>
                     {JSON.stringify(data[obj])}
@@ -58,8 +55,5 @@ const ModalView = (props)=> {
       </Modal>
     </>
   );
-}
-const RowView =()=>{
-
 }
 export default ModalView;

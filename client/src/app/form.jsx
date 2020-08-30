@@ -1,5 +1,5 @@
 import React from 'react';
-import './from.css';
+import './form.css';
 import FormHeader from './formHeader';
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -25,8 +25,27 @@ const Form = () =>{
 const FormBody = () =>{
   const [show, setShow] =useState(false);
   const [data, setData] =useState({ a: 1, b: 2 });
-  const formData = { amount:"", currency:"", senderName:"", senderEmail:"", senderAddress:"", snderPhone:"", recieverName:"", recieverPhone:"", recieverEmail:"", recieverAddress:"", recieverCountry:"", paymentMethod:"", bankName:"", accountName:"", accountNumber:"" };
+  
+  const formData = {
+    secretKey: "",
+    amount: "",
+    currency: "",
+    senderName: "",
+    senderEmail: "",
+    senderAddress: "",
+    senderPhone: "",
+    recieverName: "",
+    recieverPhone: "",
+    recieverEmail: "",
+    recieverAddress: "",
+    recieverCountry: "",
+    paymentMethod: "",
+    bankName: "",
+    accountName: "",
+    accountNumber: "",
+  };
   const formSchema = Yup.object().shape({
+    secretKey: Yup.string().required("API Key is Required"),
     amount: Yup.string().required("Required"),
     currency: Yup.string().required("Required"),
     senderName: Yup.string().required("Required"),
@@ -41,36 +60,40 @@ const FormBody = () =>{
     // accountName: Yup.string(),
     // accountNumber: Yup.string(),
   });
-  const { values, touched, errors, handleChange, handleBlur, handleSubmit, isSubmitting, setSubmitting } = useFormik({
-    initialValues: formData, validationSchema: formSchema, onSubmit(values, {resetForm}) {
-      // console.log(values);
-      formService.postPayment(values)
-      .then((res)=>{
-        console.log(res.data);
-        setData(res.data)
-        // AlertResp({title:'Success', text:res.message, icon:'success', confirmButtonText:'close'});
-        // resetForm({values:""})
-        // setSubmitting(false);
-        setShow(true)
-      })
-      .catch((err)=>{
-        let msg = err.response.data.message
-        // console.log(msg);
-        AlertResp({title:'Error Occurred', text:msg, icon:'error', confirmButtonText:'Try Again'});
-        setSubmitting(false);
-      })
+  const { values, touched, errors, handleChange, handleBlur, handleSubmit, isSubmitting, setSubmitting, resetForm } = useFormik({
+    initialValues: formData, validationSchema: formSchema, onSubmit(values) {
+      return makeTransaction(values);
     },
   });
+
+  const makeTransaction=(values)=>{
+    formService.postPayment(values)
+    .then((res)=>{
+      console.log(res.data);
+      setData(res.data)
+      setShow(true)
+    })
+    .catch((err)=>{
+      let msg = err.response;
+      console.log(msg.data.message);
+      AlertResp({title:'Error Occurred', text:msg.data.message, icon:'error', confirmButtonText:'Try Again'});
+      setSubmitting(false);
+    });
+  }
+
   const ProceedPayment=(txId)=>{
     setSubmitting(true);
     // console.log("here");
     setShow(false);
-    formService.proceedPayment(txId).then((res) => {
+    formService.proceedPayment(txId, values.secretKey).then((res) => {
       setSubmitting(false);
+        resetForm(formData);
       AlertResp({title:'Success', text:res.message, icon:'success', confirmButtonText:'close'});
     })
       .catch((err) => {
         let msg = err.response.data.message;
+        resetForm(formData);
+        setSubmitting(false);
         // console.log(msg);
         AlertResp({
           title: "Error Occurred",
@@ -78,12 +101,26 @@ const FormBody = () =>{
           icon: "error",
           confirmButtonText: "Try Again",
         });
-        setSubmitting(false);
       });
   }
 	// console.log(errors, touched); 
 	return (
-    <form className={"form"}onSubmit={handleSubmit}>
+    <form className={"form"} onSubmit={handleSubmit}>
+      <div className="row">
+        <div className="col-md-12 form-field">
+          <FormInput
+            label={"API SECRET KEY"}
+            name={"secretKey"}
+            type={"text"}
+            value={values.secretKey}
+            handleBlur={handleBlur}
+            handleChange={handleChange}
+          />
+          {errors.secretKey && touched.secretKey ? (
+            <h6 className="error">{errors.secretKey}</h6>
+          ) : null}
+        </div>
+      </div>
       <div className="row">
         <div className="col-md-6 form-field">
           <FormInput
@@ -312,9 +349,28 @@ const FormBody = () =>{
           className={"btn btn-md btn-primary float-right"}
           type="submit"
           onSubmit={handleSubmit}
-            disabled={isSubmitting} >{isSubmitting?<FontAwesomeIcon icon={faSpinner} spin style={{fontSize:15, marginRight:10}} />:''}{isSubmitting?'Processing...':'Send Payment'}</button>
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <FontAwesomeIcon
+              icon={faSpinner}
+              spin
+              style={{ fontSize: 15, marginRight: 10 }}
+            />
+          ) : (
+            ""
+          )}
+          {isSubmitting ? "Processing..." : "Send Payment"}
+        </button>
       </div>
-      <ModalView show={show} setShow={setShow} data={data} Proceed={ProceedPayment} />
+      <ModalView
+        show={show}
+        setShow={setShow}
+        data={data}
+        Proceed={ProceedPayment}
+        resetForm={resetForm}
+        formData={formData}
+      />
     </form>
   );
 }
