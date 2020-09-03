@@ -73,7 +73,7 @@ let controller = {
       // })
     } catch (err) {
       let data = err.response;
-      console.log(err.response.data);
+      console.log(err.response, err.response.data);
       return res.status(data.status).json({ message: data.data.message });
     }
   },
