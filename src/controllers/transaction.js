@@ -23,7 +23,7 @@ let controller = {
 
   create: async (req, res) => {
     try {
-      // console.log(req.body);
+      console.log(req.body, '\n\n\n');
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         console.log(errors.array()[0]);
@@ -46,7 +46,7 @@ let controller = {
       // })
     } catch (err) {
       let data = err.response;
-      // console.log(data.data);
+      // console.log('\n\n\n', data.data);
       return res.status(data.status).json({message: data.data.error});
     }
   },
