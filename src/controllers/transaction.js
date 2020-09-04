@@ -2,6 +2,7 @@ let limit = 50;   // number of records per page
 let offset = 0;
 const { validationResult } = require('express-validator');
 const axios = require('axios');
+const configD = require('../config');
 
 
 /* GET actorController. */
@@ -29,8 +30,8 @@ let controller = {
         console.log(errors.array()[0]);
         return res.status(400).json({ errors: errors.array()[0].msg });
       }
-      let url = `${process.env.UAPI}/transaction/initiate`;
-      let token = `${req.body.secretKey || process.env.secret_key}`;
+      let url = `${configD.API}/transaction/initiate`;
+      let token = `${req.body.secretKey || configD.secret_key}`;
       let config = {
         headers: {
           Authorization: `bearer ${token}`,
