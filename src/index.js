@@ -8,14 +8,16 @@ const PORT = process.env.PORT || 4000;
 const env = process.env.ENV || 'development';
 const layout = require("express-layout");
 var apiRoute = require('./routes/api');
+const dotenv = require('dotenv');
+dotenv.config();
 // var appRoute = require('./routes/route');
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const flash = require("express-flash");
 const helmet = require("helmet");
-const dotenv = require('dotenv');
 const DIR = 'client/build';
-dotenv.config()
+
+console.log(process.env.UAPI);
 
 
 // app.set("views", path.join(__dirname, "views"));

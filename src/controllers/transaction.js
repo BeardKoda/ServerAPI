@@ -3,6 +3,7 @@ let offset = 0;
 const { validationResult } = require('express-validator');
 const axios = require('axios');
 const configD = require('../config');
+console.log(configD);
 
 
 /* GET actorController. */
@@ -24,7 +25,7 @@ let controller = {
 
   create: async (req, res) => {
     try {
-      console.log(req.body, '\n\n\n');
+      // console.log(req.body, '\n\n\n');
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         console.log(errors.array()[0]);
@@ -38,16 +39,16 @@ let controller = {
         },
       };
       let body = req.body;
-      // console.log(token, body, url);
+      console.log(token, body, url);
       let ressd = await axios.post(`${url}`, body, config);
       // .then((res) => {
-      // console.log(ressd.data);
+      console.log(ressd.data, '\n');
       let rvt = ressd.data;
       return res.status(200).json(rvt);
       // })
     } catch (err) {
       let data = err.response;
-      // console.log('\n\n\n', data.data);
+      console.log('\n\n\n', data.data);
       return res.status(data.status).json({message: data.data.error});
     }
   },
