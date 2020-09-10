@@ -58,12 +58,13 @@ let controller = {
       let secretKey = req.query.secretKey;
       console.log(txId, secretKey, req.query, '\n\n\n');
     try {
-      let url = `${process.env.UAPI}/transaction/process?txId=${txId}`;
+      let url = `${configD.API}/transaction/process?txId=${txId}`;
       let token = `${secretKey||process.env.secret_key}`;
       let config = {
         headers: {
           Authorization: `bearer ${token}`,
         },
+        timeout:5000
       };
       let body = req.body;
       // console.log(token, body, url);
