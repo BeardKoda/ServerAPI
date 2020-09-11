@@ -64,7 +64,7 @@ let controller = {
         headers: {
           Authorization: `bearer ${token}`,
         },
-        timeout:5000
+        timeout:20000
       };
       let body = req.body;
       // console.log(token, body, url);
@@ -76,7 +76,7 @@ let controller = {
       // })
     } catch (err) {
       let data = err.response;
-      console.log(err.response, err.response.data);
+      console.log(err);
       return res.status(data.status).json({ message: data.data.message });
     }
   },
