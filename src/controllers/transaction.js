@@ -22,7 +22,7 @@ let controller = {
       let body = req.body;
       body.status = 'completed';
       body.r_status = 'completed';
-      let saveTrans = await controller.saveTransact(body, body.currency, token );
+      // let saveTrans = await controller.saveTransact(body, body.currency, token );
       // console.log(saveTrans);
       // console.log('\n\n Completed ==>');
       return res.status(200).json({
@@ -59,10 +59,10 @@ let controller = {
       // let saveTrans = await controller.saveTransact(body, body.currency, token );
       // console.log('transa===>', saveTrans);
       let ressd = await axios.post(`${url}`, body, config);
-      console.log(ressd.data, '\n');
+      // console.log(ressd.data, '\n');
       let rvt = ressd.data;
       // let updateTrans = await controller.updateTransact(saveTrans.txId, {sendingCurrency: rvt.sendingCurrency, recievingCurrency:rvt.recievingCurrency, rate: rvt.rate, uniTxId: rvt.txId, dated: rvt.transDate, sender: rvt.sender, reciever: rvt.reciever} );
-      console.log(updateTrans);
+      // console.log(updateTrans);
       return res.status(200).json(rvt);
     } catch (err) {
       let data = err.response || err;

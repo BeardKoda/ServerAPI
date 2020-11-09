@@ -19,7 +19,7 @@ const helmet = require("helmet");
 const DIR = 'client/build';
 
 console.log(process.env.UAPI);
-db.load();
+// db.load();
 
 
 const middlewares = [
