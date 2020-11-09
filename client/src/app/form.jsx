@@ -122,7 +122,7 @@ const FormBody = () =>{
   const ProceedPayment=(txId)=>{
     setSubmitting(true);
     
-    setShow(false);
+    setShow(false);                                             
     formService.proceedPayment(txId, values.secretKey).then((res) => {
       setSubmitting(false);
         resetForm(formData);

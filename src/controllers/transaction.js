@@ -10,21 +10,21 @@ console.log(configD);
 /* GET actorController. */
 let controller = {
   recieve: async (req, res) => {
-    console.log('\n\n recieving====>');
+    // console.log('\n\n recieving====>');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       console.log(errors.array()[0]);
       return res.status(400).json({ errors: errors.array()[0].msg });
     }
     try{
-      console.log('\n\n Processing ==>');
+      // console.log('\n\n Processing ==>');
       let token = 'recieved';
       let body = req.body;
       body.status = 'completed';
       body.r_status = 'completed';
       let saveTrans = await controller.saveTransact(body, body.currency, token );
-      console.log(saveTrans);
-      console.log('\n\n Completed ==>');
+      // console.log(saveTrans);
+      // console.log('\n\n Completed ==>');
       return res.status(200).json({
         success: true,
         message: "successfull made transaction",
@@ -56,12 +56,12 @@ let controller = {
       };
       let body = req.body;
       // console.log(token, body, url);
-      let saveTrans = await controller.saveTransact(body, body.currency, token );
-      console.log('transa===>', saveTrans);
+      // let saveTrans = await controller.saveTransact(body, body.currency, token );
+      // console.log('transa===>', saveTrans);
       let ressd = await axios.post(`${url}`, body, config);
       console.log(ressd.data, '\n');
       let rvt = ressd.data;
-      let updateTrans = await controller.updateTransact(saveTrans.txId, {sendingCurrency: rvt.sendingCurrency, recievingCurrency:rvt.recievingCurrency, rate: rvt.rate, uniTxId: rvt.txId, dated: rvt.transDate, sender: rvt.sender, reciever: rvt.reciever} );
+      // let updateTrans = await controller.updateTransact(saveTrans.txId, {sendingCurrency: rvt.sendingCurrency, recievingCurrency:rvt.recievingCurrency, rate: rvt.rate, uniTxId: rvt.txId, dated: rvt.transDate, sender: rvt.sender, reciever: rvt.reciever} );
       console.log(updateTrans);
       return res.status(200).json(rvt);
     } catch (err) {
