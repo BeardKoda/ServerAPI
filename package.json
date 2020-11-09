@@ -16,6 +16,10 @@
     "express-layout": "^0.1.0",
     "express-session": "^1.17.1",
     "express-validator": "^6.6.0",
+    "moment": "^2.27.0",
+    "mongoose": "^5.9.22",
+    "node-uuid": "^1.4.8",
+    "mongoose-unique-validator": "^2.0.3",
     "helmet": "^4.1.0"
   },
   "scripts": {

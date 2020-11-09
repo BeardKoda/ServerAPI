@@ -9,6 +9,7 @@ const env = process.env.ENV || 'development';
 const layout = require("express-layout");
 var apiRoute = require('./routes/api');
 const dotenv = require('dotenv');
+const db = require('./helpers/database');
 dotenv.config();
 // var appRoute = require('./routes/route');
 const cookieParser = require("cookie-parser");
@@ -18,10 +19,8 @@ const helmet = require("helmet");
 const DIR = 'client/build';
 
 console.log(process.env.UAPI);
+db.load();
 
-
-// app.set("views", path.join(__dirname, "views"));
-// app.set("view engine", "ejs");
 
 const middlewares = [
   // helmet(),

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './form.css';
 import FormHeader from './formHeader';
 import { useFormik } from "formik";
@@ -9,17 +9,55 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import formService from "./form.service";
 import ModalView from './view';
-import { useState } from 'react';
+import Search from './search';
+
 
 const Form = () =>{
 	return(
 		<div className="row justify-content-center align-content-center mt-5">
 			<div className="col-md-6">
-				<FormHeader />
-				<FormBody />
+        <Main />
+				{/* <FormHeader />
+				<FormBody /> */}
 			</div>
 		</div>
 	)
+}
+
+const Main = () => {
+  const [showForm, setShowForm] = useState(true);
+  return (
+    <div className="row">
+      <div className="row">
+        <div className="col mb-5">
+          <button 
+            className={showForm? "btn btn-md btn-primary" : "btn btn-md btn-secondary"} 
+            onClick={()=>setShowForm(true)}>
+            {'Show Form'}
+          </button>
+        </div>
+        <div className="col">
+          <button 
+            className={!showForm? "btn btn-md btn-primary" : "btn btn-md btn-secondary"} 
+            onClick={()=>setShowForm(false)}>
+            {'Search'}
+          </button>
+        </div>
+      
+      </div>
+
+      {showForm?
+        <div className="row">
+          <FormHeader />
+          <FormBody />
+        </div>
+      :
+        <div className="row">
+          <Search />
+        </div>
+      }
+    </div>
+  )
 }
 
 const FormBody = () =>{
@@ -70,7 +108,7 @@ const FormBody = () =>{
     formService.postPayment(values)
     .then((res)=>{
       console.log(res.data);
-      setData(res.data)
+      setData(res.data.data)
       setShow(true)
     })
     .catch((err)=>{
@@ -83,7 +121,7 @@ const FormBody = () =>{
 
   const ProceedPayment=(txId)=>{
     setSubmitting(true);
-    // console.log("here");
+    
     setShow(false);
     formService.proceedPayment(txId, values.secretKey).then((res) => {
       setSubmitting(false);
@@ -94,7 +132,7 @@ const FormBody = () =>{
         let msg = err.response.data.message;
         resetForm(formData);
         setSubmitting(false);
-        // console.log(msg);
+        
         AlertResp({
           title: "Error Occurred",
           text: msg,
@@ -402,6 +440,5 @@ const AlertResp = (props) =>{
     confirmButtonText,
   });
 }
-
 export default Form;
 
