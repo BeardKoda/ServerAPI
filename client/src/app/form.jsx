@@ -112,9 +112,9 @@ const FormBody = () =>{
       setShow(true)
     })
     .catch((err)=>{
-      let msg = err.response;
-      console.log(msg.data.message);
-      AlertResp({title:'Error Occurred', text:msg.data.message, icon:'error', confirmButtonText:'Try Again'});
+      let msg = err.response.data.message || err.response.message;
+      console.log(msg);
+      AlertResp({title:'Error Occurred', text:msg, icon:'error', confirmButtonText:'Try Again'});
       setSubmitting(false);
     });
   }

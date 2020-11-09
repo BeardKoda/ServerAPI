@@ -32,9 +32,9 @@ let controller = {
       });
     } catch (err) {
       let data = err.response || err;
-      console.log('\n\n\n', err, 'key==>');
+      console.log('\n\n\n', err.response, 'key==>');
       errCode = data.status || 500 ;
-      errMsg = data.data ? data.data.error : "An error Occurred Contact Support.";
+      errMsg = data.data ? data.data.message : "An error Occurred Contact Support.";
       return res.status(errCode).json({message: errMsg});
     }
   },
@@ -66,9 +66,9 @@ let controller = {
       return res.status(200).json(rvt);
     } catch (err) {
       let data = err.response || err;
-      console.log('\n\n\n', err, 'key==>');
+      console.log('\n\n\n', err.response.status, 'key==>');
       errCode = data.status || 500 ;
-      errMsg = data.data ? data.data.error : "An error Occurred Contact Support.";
+      errMsg = data.data ? data.data.message : "An error Occurred Contact Support.";
       return res.status(errCode).json({message: errMsg});
     }
   },
