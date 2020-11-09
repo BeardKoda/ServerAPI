@@ -78,7 +78,7 @@ let controller = {
       let secretKey = req.query.secretKey;
       console.log(txId, secretKey, req.query, '\n\n\n');
     try {
-      await controller.updateByUnTxId(txId, {status:'processing'});
+      // await controller.updateByUnTxId(txId, {status:'processing'});
       let url = `${configD.API}/transaction/process?txId=${txId}`;
       let token = `${secretKey||process.env.secret_key}`;
       let config = {
