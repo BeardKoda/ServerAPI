@@ -67,11 +67,9 @@ const FormBody = () =>{
   const formData = {
     secretKey: "",
     amount: "",
-    currency: "",
+    currency: "USDT",
     senderName: "",
-    senderEmail: "",
-    senderAddress: "",
-    senderPhone: "",
+    senderKYCStatus: "",
     recieverName: "",
     recieverPhone: "",
     recieverEmail: "",
@@ -85,12 +83,10 @@ const FormBody = () =>{
   const formSchema = Yup.object().shape({
     secretKey: Yup.string().required("API Key is Required"),
     amount: Yup.string().required("Required"),
-    currency: Yup.string().required("Required"),
+    currency: Yup.string(),
     senderName: Yup.string().required("Required"),
-    senderEmail: Yup.string().required("Required"),
-    senderAddress: Yup.string().required("Required"),
+    senderKYCStatus: Yup.string().required("Required"),
     recieverName: Yup.string().required("Required"),
-    recieverEmail: Yup.string().required("Required"),
     recieverAddress: Yup.string().required("Required"),
     recieverCountry: Yup.string().required("Required"),
     paymentMethod: Yup.string().required("Required"),
@@ -130,7 +126,7 @@ const FormBody = () =>{
     })
       .catch((err) => {
         let msg = err.response.data.message;
-        resetForm(formData);
+        // resetForm(formData);
         setSubmitting(false);
         
         AlertResp({
@@ -173,7 +169,7 @@ const FormBody = () =>{
             <h6 className="error">{errors.amount}</h6>
           ) : null}
         </div>
-        <div className="col-md-6 form-field">
+        {/* <div className="col-md-6 form-field">
           <label htmlFor="currency">Select Currency</label>
           <select
             id="currency"
@@ -189,12 +185,10 @@ const FormBody = () =>{
           {errors.currency && touched.currency ? (
             <h6 className="error">{errors.currency}</h6>
           ) : null}
-        </div>
-      </div>
-      <div className="row">
+        </div> */}
         <div className="col-6 form-field">
           <FormInput
-            label={"name"}
+            label={"Sender's Name"}
             name={"senderName"}
             type={"text"}
             value={values.senderName}
@@ -205,48 +199,21 @@ const FormBody = () =>{
             <h6 className="error">{errors.senderName}</h6>
           ) : null}
         </div>
-        <div className="col-6 form-field">
-          <FormInput
-            label={"Phone"}
-            name={"senderPhone"}
-            type={"text"}
-            value={values.senderPhone}
-            handleChange={handleChange}
-          />
-          {errors.senderPhone ? (
-            <h6 className="error">{errors.senderPhone}</h6>
-          ) : null}
-        </div>
       </div>
       <div className="row">
         <div className="col-6 form-field">
           <FormInput
-            label={"email"}
-            name={"senderEmail"}
-            type={"email"}
-            value={values.senderEmail}
+            label={"KYC Status"}
+            name={"senderKYCStatus"}
+            type={"checkbox"}
+            value={values.senderKYCStatus}
             handleBlur={handleBlur}
             handleChange={handleChange}
           />
-          {errors.senderEmail && touched.senderEmail ? (
-            <h6 className="error">{errors.senderEmail}</h6>
+          {errors.senderKYCStatus && touched.senderKYCStatus ? (
+            <h6 className="error">{errors.senderKYCStatus}</h6>
           ) : null}
         </div>
-        <div className="col-6 form-field">
-          <FormInput
-            label={"Address"}
-            name={"senderAddress"}
-            type={"text"}
-            value={values.senderAddress}
-            handleBlur={handleBlur}
-            handleChange={handleChange}
-          />
-          {errors.senderAddress && touched.senderAddress ? (
-            <h6 className="error">{errors.senderAddress}</h6>
-          ) : null}
-        </div>
-      </div>
-      <div className="row">
         <div className="col-6 form-field">
           <FormInput
             label={"Reciever's Full Name"}
@@ -260,6 +227,8 @@ const FormBody = () =>{
             <h6 className="error">{errors.recieverName}</h6>
           ) : null}
         </div>
+      </div>
+      <div className="row">
         <div className="col-6 form-field">
           <FormInput
             label={"Reciever's Phone Number"}
@@ -272,8 +241,6 @@ const FormBody = () =>{
             <h6 className="error">{errors.recieverPhone}</h6>
           ) : null}
         </div>
-      </div>
-      <div className="row">
         <div className="col-6 form-field">
           <FormInput
             label={"Reciever's Email"}
@@ -287,6 +254,8 @@ const FormBody = () =>{
             <h6 className="error">{errors.recieverEmail}</h6>
           ) : null}
         </div>
+      </div>
+      <div className="row">
         <div className="col-6 form-field">
           <FormInput
             label={"Reciever's Address"}
@@ -299,8 +268,6 @@ const FormBody = () =>{
             <h6 className="error">{errors.recieverAddress}</h6>
           ) : null}
         </div>
-      </div>
-      <div className="row">
         <div className="col-6 form-field">
           <label htmlFor="country">Reciever's Country</label>
           <select
@@ -320,6 +287,8 @@ const FormBody = () =>{
             <h6 className="error">{errors.recieverCountry}</h6>
           ) : null}
         </div>
+      </div>
+      <div className="row">
         <div className="col-6 form-field">
           <label htmlFor="pay">Payment Method</label>
           <select

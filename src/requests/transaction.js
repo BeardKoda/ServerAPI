@@ -29,9 +29,7 @@ exports.validate = (method) => {
           check("currency", "Currency is Required").exists(),
           check("recieverCountry", "Country is Required").exists(),
           check("senderName", "Sender's Name is required").exists(),
-          check("senderEmail", "Sender's Email is required").exists(),
-          check("senderPhone", "Sender's Phone Detail is required").exists(),
-          check("senderAddress", "Sender's Address is required").exists(),
+          check("senderKYCStatus", "Sender's Address is required").exists(),
           check("recieverName", "reciever's Name is required").exists(),
           check("recieverEmail", "reciever's Email is required").exists(),
           check(

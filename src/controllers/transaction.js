@@ -41,7 +41,7 @@ let controller = {
 
   create: async (req, res) => {
     try {
-      console.log(req.body, '\n\n\n');
+      // console.log(req.body, '\n\n\n');
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         // console.log(errors.array()[0]);
@@ -55,18 +55,18 @@ let controller = {
         },
       };
       let body = req.body;
-      // console.log(token, body, url);
+      console.log(token, body, url);
       // let saveTrans = await controller.saveTransact(body, body.currency, token );
       // console.log('transa===>', saveTrans);
       let ressd = await axios.post(`${url}`, body, config);
-      // console.log(ressd.data, '\n');
+      console.log(ressd.data, '\n');
       let rvt = ressd.data;
       // let updateTrans = await controller.updateTransact(saveTrans.txId, {sendingCurrency: rvt.sendingCurrency, recievingCurrency:rvt.recievingCurrency, rate: rvt.rate, uniTxId: rvt.txId, dated: rvt.transDate, sender: rvt.sender, reciever: rvt.reciever} );
       // console.log(updateTrans);
       return res.status(200).json(rvt);
     } catch (err) {
       let data = err.response || err;
-      console.log('\n\n\n', err.response.status, 'key==>');
+      console.log('\n\n\n', err, 'key==>', data);
       errCode = data.status || 500 ;
       errMsg = data.data ? data.data.message : "An error Occurred Contact Support.";
       return res.status(errCode).json({message: errMsg});
